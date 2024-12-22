@@ -1,5 +1,4 @@
-import {Image, SafeAreaView, Text, TextInput, TextInputComponent, TouchableOpacity, View} from "react-native";
-import {StyleSheet} from "react-native";
+import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Feather} from "@expo/vector-icons";
 import {SocialLogin} from "@/components";
 import {useState} from "react";
@@ -9,35 +8,40 @@ import {z} from "zod"
 import {useForm} from "react-hook-form";
 import {zodResolver} from '@hookform/resolvers/zod'
 
-export default function AuthScreen(){
-
+export default function RegisterScreen(){
     const [showPWD, setShowPWD] = useState(false)
     return(
-
         <View style={styles.container}>
             <Image style={styles.logo} source={require('@/assets/dorea_logo.png')} alt={'logo'}/>
 
             <View style={styles.form}>
-                <Text style={styles.title}> Connexion</Text>
+                <Text style={styles.title}> Créer un compte</Text>
 
                 <TextInput style={styles.inputField} keyboardType={'default'} placeholder={'eamil ou N°Téléphone'}/>
                 <View style={styles.passwordInput}>
                     <TextInput secureTextEntry={showPWD} style={styles.inputField} keyboardType={'default'} placeholder={'Mot de passe'}/>
                     <Feather onPress={()=>setShowPWD((value)=>!value)} name={showPWD?'eye-off':'eye'} size={18} style={{position: 'absolute', top: 13, right: 10}} color={"#c1c1c1"}/>
                 </View>
-                <TouchableOpacity style={styles.btn}>
-                    <Text style={styles.btn_text}>Se connecter</Text>
-                </TouchableOpacity>
+                <View style={styles.passwordInput}>
+                    <TextInput secureTextEntry={showPWD} style={styles.inputField} keyboardType={'default'} placeholder={'Confirmer mot de passe'}/>
+                    <Feather onPress={()=>setShowPWD((value)=>!value)} name={showPWD?'eye-off':'eye'} size={18} style={{position: 'absolute', top: 13, right: 10}} color={"#c1c1c1"}/>
+                </View>
 
-                <Link href={"/register"}>S'inscrire</Link>
+                <Link href={'/verification'} asChild>
+                    <TouchableOpacity style={styles.btn}>
+                        <Text style={styles.btn_text}>S'inscrire</Text>
+                    </TouchableOpacity>
+                </Link>
+
+                <Text>Vous avez déjà un compte ? <Link href={"/"} style={{color: 'blue'}}>Connectez vous</Link></Text>
 
 
                 <SocialLogin/>
             </View>
         </View>
-
     )
 }
+
 
 const styles = StyleSheet.create({
 
